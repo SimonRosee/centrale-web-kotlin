@@ -1,6 +1,7 @@
 class User (
     var name : String = "",
-    var list_post : MutableList<Post> = mutableListOf()
+    var list_post : MutableList<Post> = mutableListOf(),
+    var friend_list : MutableList<User> = mutableListOf(),
     ) {
     
     fun get_name () : String {
@@ -22,10 +23,26 @@ class User (
             var post = Post(title, this, message)
             this.list_post.add(post)
     }
+
+    fun add_friend (friend : User) {
+        this.friend_list.add(friend)
+    }
+
+    fun remove_friend(friend : User) {
+        this.friend_list.remove(friend)
+    }
+
+    fun reply_to_post(post : Post, reply : String) {
+
+    }
 }
 
 
-class Post (var title : String, var creator : User, var message : String) {
+class Post (
+    var title : String,
+    var creator : User,
+    var message : String
+    ) {
     
     fun print () {
         println("Title :" + this.title)
@@ -38,6 +55,11 @@ class Post (var title : String, var creator : User, var message : String) {
 
 fun main () {
     val jose = User("jose")
+    val pierre = User("pierre")
     jose.create_post("titre", "ceci est un message")
     jose.print_all_post()
+    jose.add_friend(pierre)
+    println(jose.friend_list)
+    jose.remove_friend(pierre)
+    println(jose.friend_list)
 }
